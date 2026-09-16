@@ -12,9 +12,12 @@ namespace Calcolatrice
 {
     public partial class FrmCalcolatrice : Form
     {
+        private Label ResultLabel;
+
         static private Color OPERATION_BG=Color.LightGray;
         static private Color NUMBER_BG=Color.WhiteSmoke;
         static private Color EQUAL_BG=Color.MediumBlue;
+
 
         public struct BtnStruct
         {
@@ -32,6 +35,7 @@ namespace Calcolatrice
             }
         }
 
+
         private BtnStruct[,] buttons =
         {
             { new BtnStruct('%',OPERATION_BG), new BtnStruct('\u0152',OPERATION_BG), new BtnStruct('C',OPERATION_BG), new BtnStruct('\u232B', OPERATION_BG)},
@@ -48,16 +52,34 @@ namespace Calcolatrice
             InitializeComponent();
         }
 
+
         private void Form1_Load(object sender, EventArgs e)
         {
+            MakeResultlabel();
             MakeButtons();
         }
+
+
+        private void MakeResultlabel()
+        {
+            ResultLabel = new Label()
+            {
+                Font = new Font("Segoe UI", 22, FontStyle.Bold),
+                TextAlign = ContentAlignment.MiddleRight,
+                AutoSize = false,
+                Location = new Point(0, 0),
+                Size = new Size(this.Width, 100),
+                BackColor = Color.Beige,
+            };
+            Controls.Add(ResultLabel);
+        }
+
 
         private void MakeButtons()
         {
             int btnWidth = 80;
             int btnHeight = 60;
-            int posY = 106;
+            int posY = 116;
            
             for (int i = 0; i < buttons.GetLength(0); i++)
             {
@@ -72,11 +94,17 @@ namespace Calcolatrice
                     btn.Font = new Font("Segoe UI", 16);
                     btn.Text= buttons[i,j].ToString();
                     btn.BackColor = buttons[i,j].BgColor;
+                    btn.Click += Btn_Click;
                     Controls.Add(btn);
                     posX+=btnWidth;
                 }
                 posY += btnHeight;
             }
+        }
+
+        private void Btn_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }
